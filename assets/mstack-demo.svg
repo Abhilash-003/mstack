@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 520" font-family="'SF Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace" font-size="13">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1b26"/>
+      <stop offset="100%" stop-color="#16161e"/>
+    </linearGradient>
+    <linearGradient id="titlebar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a2b3d"/>
+      <stop offset="100%" stop-color="#222336"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Window frame -->
+  <rect width="850" height="520" rx="12" fill="url(#bg)" stroke="#3b3d57" stroke-width="1"/>
+
+  <!-- Title bar -->
+  <rect width="850" height="38" rx="12" fill="url(#titlebar)"/>
+  <rect y="28" width="850" height="10" fill="url(#titlebar)"/>
+
+  <!-- Traffic lights -->
+  <circle cx="22" cy="19" r="6.5" fill="#ff5f57"/>
+  <circle cx="42" cy="19" r="6.5" fill="#febc2e"/>
+  <circle cx="62" cy="19" r="6.5" fill="#28c840"/>
+
+  <!-- Title -->
+  <text x="425" y="23" text-anchor="middle" fill="#787c99" font-size="12.5">mstack — claude code</text>
+
+  <!-- Prompt line 1: /maintain command -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="0.5s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="68" fill="#7aa2f7">❯</text>
+    <text x="44" y="68" fill="#c0caf5">/maintain</text>
+    <animate attributeName="opacity" values="0;1" begin="0.5s" dur="0.01s" fill="freeze"/>
+  </g>
+
+  <!-- Phase 1 header -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="1.5s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="98" fill="#bb9af7" font-weight="bold">▸ Phase 1: Issue Triage</text>
+  </g>
+
+  <!-- Scanning message -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="2s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="120" fill="#565f89">  Scanning 47 open issues...</text>
+  </g>
+
+  <!-- Issue 1 -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="2.8s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="148" fill="#a9b1d6">  #142</text>
+    <text x="80" y="148" fill="#c0caf5">App crashes on login with SSO</text>
+    <rect x="340" y="136" width="40" height="18" rx="4" fill="#f7768e" opacity="0.2"/>
+    <text x="345" y="149" fill="#f7768e" font-size="11">bug</text>
+    <rect x="388" y="136" width="82" height="18" rx="4" fill="#ff9e64" opacity="0.2"/>
+    <text x="393" y="149" fill="#ff9e64" font-size="11">priority:high</text>
+  </g>
+
+  <!-- Issue 2 -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="3.4s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="170" fill="#a9b1d6">  #143</text>
+    <text x="80" y="170" fill="#c0caf5">Add dark mode support</text>
+    <rect x="264" y="158" width="66" height="18" rx="4" fill="#9ece6a" opacity="0.2"/>
+    <text x="269" y="171" fill="#9ece6a" font-size="11">feature</text>
+    <rect x="338" y="158" width="90" height="18" rx="4" fill="#7aa2f7" opacity="0.2"/>
+    <text x="343" y="171" fill="#7aa2f7" font-size="11">priority:med</text>
+  </g>
+
+  <!-- Issue 3 - duplicate -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="4s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="192" fill="#a9b1d6">  #144</text>
+    <text x="80" y="192" fill="#565f89">Login crash on mobile browsers</text>
+    <rect x="320" y="180" width="72" height="18" rx="4" fill="#e0af68" opacity="0.2"/>
+    <text x="325" y="193" fill="#e0af68" font-size="11">dup #142</text>
+  </g>
+
+  <!-- Issue 4 - spam -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="4.6s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="214" fill="#a9b1d6">  #145</text>
+    <text x="80" y="214" fill="#565f89">Great project improvement idea</text>
+    <rect x="320" y="202" width="78" height="18" rx="4" fill="#f7768e" opacity="0.15"/>
+    <text x="325" y="215" fill="#f7768e" font-size="11">⚠ bot/spam</text>
+  </g>
+
+  <!-- Triage summary -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="5.4s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="244" fill="#9ece6a">  ✓ 4 issues triaged: 2 labeled, 1 duplicate, 1 flagged</text>
+  </g>
+
+  <!-- Phase 2 header -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="6.2s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="274" fill="#bb9af7" font-weight="bold">▸ Phase 2: PR Review</text>
+  </g>
+
+  <!-- PR 1 -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="7s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="302" fill="#a9b1d6">  #89</text>
+    <text x="76" y="302" fill="#c0caf5">Add user search endpoint</text>
+    <text x="290" y="302" fill="#565f89">+347 -12</text>
+    <rect x="370" y="290" width="60" height="18" rx="4" fill="#e0af68" opacity="0.2"/>
+    <text x="375" y="303" fill="#e0af68" font-size="11">MEDIUM</text>
+  </g>
+
+  <!-- PR 1 findings -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="7.6s" dur="0.3s" fill="freeze"/>
+    <text x="48" y="322" fill="#e0af68" font-size="11.5">    ⚠ No tests for new endpoint  ⚠ 1 new dependency added</text>
+  </g>
+
+  <!-- PR 2 -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="8.2s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="346" fill="#a9b1d6">  #91</text>
+    <text x="76" y="346" fill="#c0caf5">Fix typo in README</text>
+    <text x="254" y="346" fill="#565f89">+1 -1</text>
+    <rect x="310" y="334" width="46" height="18" rx="4" fill="#9ece6a" opacity="0.2"/>
+    <text x="315" y="347" fill="#9ece6a" font-size="11">LOW</text>
+  </g>
+
+  <!-- Review summary -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="9s" dur="0.3s" fill="freeze"/>
+    <text x="24" y="376" fill="#9ece6a">  ✓ 2 PRs reviewed: 1 needs changes, 1 ready</text>
+  </g>
+
+  <!-- Final summary box -->
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1" begin="10s" dur="0.5s" fill="freeze"/>
+    <rect x="16" y="396" width="818" height="108" rx="8" fill="#1e1f2e" stroke="#3b3d57" stroke-width="1"/>
+
+    <text x="32" y="420" fill="#7aa2f7" font-weight="bold" font-size="13">═══ Maintenance Complete ═══</text>
+
+    <text x="32" y="444" fill="#a9b1d6">Triage:</text>
+    <text x="110" y="444" fill="#9ece6a">4 processed</text>
+    <text x="220" y="444" fill="#a9b1d6">Review:</text>
+    <text x="295" y="444" fill="#9ece6a">2 screened</text>
+    <text x="400" y="444" fill="#a9b1d6">Responses:</text>
+    <text x="495" y="444" fill="#9ece6a">3 drafted</text>
+
+    <text x="32" y="468" fill="#a9b1d6">Health:</text>
+    <text x="110" y="468" fill="#9ece6a">report saved</text>
+    <text x="260" y="468" fill="#a9b1d6">Time:</text>
+    <text x="310" y="468" fill="#bb9af7">4m 23s</text>
+    <text x="400" y="468" fill="#565f89">(vs ~2 hours manual)</text>
+
+    <!-- Blinking cursor -->
+    <rect x="32" y="484" width="8" height="15" fill="#7aa2f7">
+      <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Looping: fade everything out and restart -->
+  <g>
+    <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.85;0.9;0.95;1" dur="16s" repeatCount="indefinite"/>
+  </g>
+</svg>

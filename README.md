@@ -4,6 +4,10 @@
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](CHANGELOG.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
+<p align="center">
+  <img src="assets/mstack-demo.svg" alt="MStack Demo — terminal animation showing issue triage, PR review, and maintenance pipeline" width="800"/>
+</p>
+
 Open source maintainer automation skills for Claude Code.
 
 An OSS maintainer with 50 unread issues spends 80% of their time on grunt work: labeling, finding duplicates, screening spam PRs, drafting responses. MStack compresses that to near-zero. The judgment stays with the maintainer.
