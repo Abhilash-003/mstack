@@ -14,15 +14,15 @@ An OSS maintainer with 50 unread issues spends 80% of their time on grunt work: 
 
 ## Skills
 
-| Skill | What it does | When to use |
-|-------|-------------|------------|
-| `/maintain` | Full pipeline: triage + review + respond + health | "Morning maintenance", "process everything" |
-| `/triage` | Categorize issues, detect duplicates, flag bots | "Triage issues", "process the backlog" |
-| `/review-prs` | Pre-screen PRs: security, tests, quality, CI | "Review PRs", "check open pull requests" |
-| `/respond` | Draft tone-matched responses for issues and PRs | "Respond to issues", "draft replies" |
-| `/health` | Repo health report: stale, CI, dependencies | "Repo health", "check project status" |
-| `/mstack-release` | Changelog + version bump + GitHub release | "Ship a release", "cut a new version" |
-| `/mstack-setup` | Configure MStack for this repo | First-time setup, label taxonomy |
+| Skill | What it does | Say this to Claude |
+|-------|-------------|-------------------|
+| **maintain** | Full pipeline: triage + review + respond + health | "run mstack maintain" |
+| **triage** | Categorize issues, detect duplicates, flag bots | "triage the issues in this repo" |
+| **review-prs** | Pre-screen PRs: security, tests, quality, CI | "review the open PRs" |
+| **respond** | Draft tone-matched responses for issues and PRs | "draft responses for open issues" |
+| **health** | Repo health report: stale, CI, dependencies | "run a health check on this repo" |
+| **mstack-release** | Changelog + version bump + GitHub release | "cut a new release" |
+| **mstack-setup** | Configure MStack for this repo | "setup mstack for this repo" |
 
 ## Install (30 seconds)
 
@@ -31,30 +31,31 @@ git clone --single-branch --depth 1 https://github.com/Abhilash-003/mstack.git
 cd mstack && ./setup
 ```
 
-The setup script symlinks all skills into `~/.claude/skills/` so Claude Code discovers them as slash commands. Works regardless of where you clone the repo.
-
-Then in Claude Code, run `/mstack-setup` inside your repo to configure it.
+The setup script symlinks all skills into `~/.claude/skills/` so Claude Code can discover and invoke them. Works regardless of where you clone the repo.
 
 ## Quick Start
 
-Full maintenance session:
+MStack skills are invoked through natural language in Claude Code. Just describe what you want:
+
 ```
-/maintain
+"run the full maintenance pipeline on this repo"
+"triage the open issues"
+"review open pull requests"  
+"draft responses for unanswered issues"
+"give me a health report for this repo"
+"cut a new release"
 ```
 
-Individual skills:
+You can also be specific:
+
 ```
-/triage
-/review-prs
-/respond
-/health
-/mstack-release
+"review PR #42"
+"respond to issues #17 and #23"
 ```
 
-Specific items:
+**First time?** Start with:
 ```
-/review-prs 42          # review a single PR
-/respond 17 #23         # draft responses for specific issues
+"setup mstack for this repo"
 ```
 
 ## The Maintenance Pipeline
@@ -79,7 +80,7 @@ All GitHub actions happen through the `gh` CLI — which you're already authenti
 - **Pure SKILL.md files** — no Express, no React, no Postgres. Claude Code IS the runtime.
 - **Logs at project root** — structured JSONL in `.mstack/logs/`, health reports in `.mstack/reports/`.
 - **gh CLI for everything** — already authenticated, no extra credentials needed.
-- **Two-phase install** — offline bootstrap (`./setup`) + interactive per-repo setup (`/mstack-setup`).
+- **Two-phase install** — offline bootstrap (`./setup`) + interactive per-repo setup (say "setup mstack").
 - **Human-in-the-loop** — every label, comment, close, tag, and push requires explicit approval.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full design rationale.
@@ -106,7 +107,7 @@ your-repo/
         └── 2026-04-13-health.md        # Health check report
 ```
 
-Add `.mstack/` to `.gitignore` to keep logs local (MStack will offer to do this during `/mstack-setup`).
+Add `.mstack/` to `.gitignore` to keep logs local (MStack will offer to do this during setup).
 
 ## Configuration
 
@@ -118,7 +119,7 @@ bin/mstack-config set stale_days 60      # write
 bin/mstack-config list                   # show all
 ```
 
-Per-repo config at `.mstack/config.yml` — written by `/mstack-setup`, editable directly.
+Per-repo config at `.mstack/config.yml` — written by mstack-setup, editable directly.
 
 Key settings:
 
@@ -130,7 +131,7 @@ Key settings:
 | `require_tests` | `true` | Flag PRs that change source without adding tests |
 | `security_scan` | `true` | Scan PR diffs for hardcoded secrets and injection risks |
 | `max_files_warn` | `50` | Warn when a PR touches more than N files |
-| `changelog_format` | `keep-a-changelog` | Changelog style for `/mstack-release` |
+| `changelog_format` | `keep-a-changelog` | Changelog style for release skill |
 | `version_scheme` | `semver` | Version bump strategy |
 
 ## Comparison
