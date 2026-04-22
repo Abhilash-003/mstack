@@ -75,7 +75,7 @@ When a user types `/triage`, Claude reads `triage/SKILL.md` and follows it. That
 
 ## Conventions
 
-**Follow GStack patterns.** MStack is modeled on [GStack's](https://github.com/garrytan/gstack) architecture. If you're unsure how to structure something, look at how GStack does it.
+**Follow existing patterns.** If you're unsure how to structure something, look at how the existing skills do it.
 
 **Human checkpoints always.** Use AskUserQuestion before any action that affects GitHub: adding labels, posting comments, closing issues, creating tags, pushing. No exceptions. The human-in-the-loop design is the core of MStack — do not build skills that bypass it.
 

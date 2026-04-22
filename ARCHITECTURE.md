@@ -32,7 +32,7 @@ Every action requires explicit maintainer approval. Nothing is posted, labeled, 
 
 The predecessor to this pattern — Ignis, the research automation platform — used Express.js + React + PostgreSQL + Supabase + a fleet of Mastra agents. It worked, but the infrastructure overhead killed iteration speed. Adding a new step meant writing an agent, registering it, adding a route, updating the frontend, testing the workflow, and deploying to Railway.
 
-GStack proved a better way: write a Markdown file. That's the entire implementation. RStack followed GStack's architecture for research automation. MStack follows the same pattern for repository maintenance.
+A better approach: write a Markdown file. That's the entire implementation.
 
 Every skill in MStack is a SKILL.md file with:
 - **Frontmatter** declaring the skill name, version, and allowed tools
@@ -49,7 +49,7 @@ MStack uses the GitHub CLI (`gh`) directly rather than wrapping the GitHub REST 
 
 **Well-designed for scripting.** `gh issue list --json`, `gh pr diff`, `gh api` cover every operation MStack needs. The JSON output is clean and consistent.
 
-**Same pattern as GStack.** GStack runs `git push` and `gh pr create` directly. MStack runs `gh issue edit` and `gh pr review` directly. The pattern is proven.
+MStack runs `gh issue edit` and `gh pr review` directly. No wrappers needed.
 
 The only helper script is `bin/mstack-config` — a YAML config reader/writer. It exists because bash does key-value config better than prose. Everything else is direct `gh` commands.
 
@@ -73,11 +73,11 @@ my-project/
 
 JSONL files use append-only writes. Each record is one line. Skills write incrementally — the log has value even if the user cancels midway through a session. Health reports are full Markdown documents written at the end of each `/health` run.
 
-**Global config** lives in `~/.mstack/config.yaml`, managed by `bin/mstack-config`. Flat keys only. Same `get`/`set`/`list` interface as GStack's `gstack-config`. Nothing sensitive goes here — credentials stay in `gh`'s native auth store.
+**Global config** lives in `~/.mstack/config.yaml`, managed by `bin/mstack-config`. Flat keys only. `get`/`set`/`list` interface. Nothing sensitive goes here — credentials stay in `gh`'s native auth store.
 
 ## Two-phase installation
 
-Adapted from GStack's `setup` script pattern:
+Two phases keep the install fast and credential-free:
 
 1. **Bootstrap** (`./setup`, offline): verifies `gh` is installed, creates `~/.mstack/` for global state, symlinks skill directories into `~/.claude/skills/`, writes default config. Creates `.install-complete` marker.
 

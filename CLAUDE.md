@@ -99,7 +99,7 @@ Work products go in `.mstack/` at the project root. Global config goes in `~/.ms
 SKILL.md files are prompt templates read by Claude, not bash scripts. Each bash code
 block runs in a separate shell. Variables do not persist between blocks.
 
-Rules (same as GStack):
+Rules:
 - Use natural language for logic and state, not shell variables between blocks
 - Keep bash blocks self-contained
 - Express conditionals as English decision steps

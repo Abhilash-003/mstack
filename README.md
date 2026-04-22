@@ -149,11 +149,6 @@ Key settings:
 - [CONTRIBUTING.md](CONTRIBUTING.md) — how to add skills and contribute
 - [CHANGELOG.md](CHANGELOG.md) — release notes
 
-## Inspired By
-
-- **[GStack](https://github.com/garrytan/gstack)** — engineering skills for Claude Code. MStack follows its architecture exactly.
-- **[RStack](https://github.com/sunnnybala/Rstack)** — research automation skills for Claude Code. Proved the SKILL.md pattern at scale.
-
 ## License
 
 MIT
