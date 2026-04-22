@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# mstack setup — register maintainer skills with Claude Code
+set -e
+
+INSTALL_DIR="$(cd "$(dirname "$0")" && pwd)"
+SOURCE_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+SKILLS_DIR="$(dirname "$INSTALL_DIR")"
+
+IS_WINDOWS=0
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*|Windows_NT) IS_WINDOWS=1 ;;
+esac
+
+# ─── Check gh CLI ────────────────────────────────────────────
+if ! command -v gh >/dev/null 2>&1; then
+  echo "Error: GitHub CLI (gh) is required but not installed." >&2
+  echo "Install from https://cli.github.com or your package manager." >&2
+  exit 1
+fi
+
+GH_VER=$(gh --version 2>&1 | head -1)
+echo "GitHub CLI: $GH_VER"
+
+# Check auth
+if ! gh auth status >/dev/null 2>&1; then
+  echo ""
+  echo "Warning: gh CLI is not authenticated."
+  echo "Run 'gh auth login' to authenticate before using MStack skills."
+  echo ""
+fi
+
+# ─── Check git ───────────────────────────────────────────────
+if ! command -v git >/dev/null 2>&1; then
+  echo "Error: git is required but not installed." >&2
+  exit 1
+fi
+
+# ─── Create state directory ─────────────────────────────────
+mkdir -p "$HOME/.mstack"
+
+# ─── Write default config if missing ────────────────────────
+MSTACK_CONFIG="$SOURCE_DIR/bin/mstack-config"
+if [ ! -f "$HOME/.mstack/config.yaml" ]; then
+  "$MSTACK_CONFIG" set detect_duplicates "true"
+  "$MSTACK_CONFIG" set detect_bots "true"
+  "$MSTACK_CONFIG" set stale_days "30"
+  "$MSTACK_CONFIG" set require_tests "true"
+  "$MSTACK_CONFIG" set security_scan "true"
+  "$MSTACK_CONFIG" set max_files_warn "50"
+  "$MSTACK_CONFIG" set changelog_format "keep-a-changelog"
+  "$MSTACK_CONFIG" set version_scheme "semver"
+  "$MSTACK_CONFIG" set proactive "true"
+  echo "Config written to ~/.mstack/config.yaml"
+fi
+
+# ─── Symlink skill directories ──────────────────────────────
+SKILL_DIRS="setup-skill triage review release health respond maintain"
+
+echo ""
+echo "Linking skills into $SKILLS_DIR ..."
+
+for dir in $SKILL_DIRS; do
+  if [ -f "$INSTALL_DIR/$dir/SKILL.md" ]; then
+    SKILL_NAME=$(grep -m1 "^name:" "$INSTALL_DIR/$dir/SKILL.md" 2>/dev/null | awk '{print $2}' || echo "$dir")
+    TARGET="$SKILLS_DIR/$SKILL_NAME"
+
+    if [ "$IS_WINDOWS" -eq 1 ]; then
+      if [ -d "$TARGET" ] && [ ! -L "$TARGET" ]; then
+        rm -rf "$TARGET"
+      fi
+      ln -snf "$INSTALL_DIR/$dir" "$TARGET" 2>/dev/null || cp -rf "$INSTALL_DIR/$dir" "$TARGET"
+    else
+      ln -snf "$INSTALL_DIR/$dir" "$TARGET"
+    fi
+    echo "  /$SKILL_NAME -> $dir/"
+  fi
+done
+
+if [ -f "$INSTALL_DIR/SKILL.md" ]; then
+  echo "  /mstack -> ./"
+fi
+
+# ─── Mark install complete ──────────────────────────────────
+touch "$HOME/.mstack/.install-complete"
+
+echo ""
+echo "=== MStack v$(cat "$SOURCE_DIR/VERSION") installed ==="
+echo "Run /mstack-setup in Claude Code inside a repo to configure."
+echo "Run /maintain to process issues, PRs, and repo health."
+echo ""
