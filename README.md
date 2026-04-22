@@ -27,9 +27,11 @@ An OSS maintainer with 50 unread issues spends 80% of their time on grunt work: 
 ## Install (30 seconds)
 
 ```bash
-git clone --single-branch --depth 1 https://github.com/Abhilash-003/mstack.git ~/.claude/skills/mstack
-cd ~/.claude/skills/mstack && ./setup
+git clone --single-branch --depth 1 https://github.com/Abhilash-003/mstack.git
+cd mstack && ./setup
 ```
+
+The setup script symlinks all skills into `~/.claude/skills/` so Claude Code discovers them as slash commands. Works regardless of where you clone the repo.
 
 Then in Claude Code, run `/mstack-setup` inside your repo to configure it.
 

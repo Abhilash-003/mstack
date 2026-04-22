@@ -4,7 +4,12 @@ set -e
 
 INSTALL_DIR="$(cd "$(dirname "$0")" && pwd)"
 SOURCE_DIR="$(cd "$(dirname "$0")" && pwd -P)"
-SKILLS_DIR="$(dirname "$INSTALL_DIR")"
+
+# ─── Determine skills directory ─────────────────────────────
+# Always symlink into ~/.claude/skills/ so Claude Code discovers them
+# as slash commands. Works regardless of where mstack was cloned.
+SKILLS_DIR="$HOME/.claude/skills"
+mkdir -p "$SKILLS_DIR"
 
 IS_WINDOWS=0
 case "$(uname -s)" in
@@ -76,7 +81,14 @@ for dir in $SKILL_DIRS; do
   fi
 done
 
+# Link the root mstack skill too
 if [ -f "$INSTALL_DIR/SKILL.md" ]; then
+  TARGET="$SKILLS_DIR/mstack"
+  if [ "$IS_WINDOWS" -eq 1 ]; then
+    ln -snf "$INSTALL_DIR" "$TARGET" 2>/dev/null || cp -rf "$INSTALL_DIR" "$TARGET"
+  else
+    ln -snf "$INSTALL_DIR" "$TARGET"
+  fi
   echo "  /mstack -> ./"
 fi
 
