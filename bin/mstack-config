@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# mstack-config — read/write ~/.mstack/config.yaml
+#
+# Usage:
+#   mstack-config get <key>          — read a config value
+#   mstack-config set <key> <value>  — write a config value
+#   mstack-config list               — show all config
+#
+# Env overrides (for testing):
+#   MSTACK_STATE_DIR  — override ~/.mstack state directory
+set -euo pipefail
+
+STATE_DIR="${MSTACK_STATE_DIR:-$HOME/.mstack}"
+CONFIG_FILE="$STATE_DIR/config.yaml"
+
+CONFIG_HEADER='# mstack configuration — edit freely, changes take effect on next skill run.
+# Docs: https://github.com/neuroanalog/mstack
+#
+# ─── Triage ──────────────────────────────────────────────────────────
+# detect_duplicates: true     # check for duplicate issues during triage
+# detect_bots: true           # flag potential bot/spam submissions
+# stale_days: 30              # days of inactivity before issue is stale
+#
+# ─── Review ──────────────────────────────────────────────────────────
+# require_tests: true         # flag PRs without test changes
+# security_scan: true         # check for hardcoded secrets, injection risks
+# max_files_warn: 50          # warn if PR touches more than N files
+#
+# ─── Release ─────────────────────────────────────────────────────────
+# changelog_format: keep-a-changelog   # changelog format
+# version_scheme: semver               # version scheme
+#
+# ─── Behavior ────────────────────────────────────────────────────────
+# proactive: true             # auto-suggest skills based on context
+#
+'
+
+case "${1:-}" in
+  get)
+    KEY="${2:?Usage: mstack-config get <key>}"
+    if ! printf '%s' "$KEY" | grep -qE '^[a-zA-Z0-9_]+$'; then
+      echo "Error: key must contain only alphanumeric characters and underscores" >&2
+      exit 1
+    fi
+    grep -E "^${KEY}:" "$CONFIG_FILE" 2>/dev/null | tail -1 | awk '{print $2}' | tr -d '[:space:]' || true
+    ;;
+  set)
+    KEY="${2:?Usage: mstack-config set <key> <value>}"
+    VALUE="${3:?Usage: mstack-config set <key> <value>}"
+    if ! printf '%s' "$KEY" | grep -qE '^[a-zA-Z0-9_]+$'; then
+      echo "Error: key must contain only alphanumeric characters and underscores" >&2
+      exit 1
+    fi
+    mkdir -p "$STATE_DIR"
+    if [ ! -f "$CONFIG_FILE" ]; then
+      printf '%s' "$CONFIG_HEADER" > "$CONFIG_FILE"
+    fi
+    ESC_VALUE="$(printf '%s' "$VALUE" | head -1 | sed 's/[&/\]/\\&/g')"
+    if grep -qE "^${KEY}:" "$CONFIG_FILE" 2>/dev/null; then
+      _tmpfile="$(mktemp "${CONFIG_FILE}.XXXXXX")"
+      sed "/^${KEY}:/s/.*/${KEY}: ${ESC_VALUE}/" "$CONFIG_FILE" > "$_tmpfile" && mv "$_tmpfile" "$CONFIG_FILE"
+    else
+      echo "${KEY}: ${VALUE}" >> "$CONFIG_FILE"
+    fi
+    ;;
+  list)
+    cat "$CONFIG_FILE" 2>/dev/null || true
+    ;;
+  *)
+    echo "Usage: mstack-config {get|set|list} [key] [value]"
+    exit 1
+    ;;
+esac
