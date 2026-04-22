@@ -234,7 +234,7 @@ mstack/
 
 ### Technical decisions
 
-**Pure SKILL.md files:** Following Rstack's proven architecture. No server, no database, no dependencies beyond `gh` CLI. Each skill is a markdown file with instructions for Claude Code.
+**Pure SKILL.md files:** No server, no database, no dependencies beyond `gh` CLI. Each skill is a markdown file with instructions for Claude Code.
 
 **`gh` CLI as the interface to GitHub:** Already authenticated on most developer machines. Handles auth, pagination, rate limiting. No need for PAT configuration.
 
@@ -346,7 +346,7 @@ Claude executes approved actions via gh CLI:
 
 ## Naming
 
-**MStack** — Maintainer Stack. Parallel to Rstack (Research Stack). Short, memorable, descriptive.
+**MStack** — Maintainer Stack. Short, memorable, descriptive.
 
 Alternative: **Shepherd** — guides the flock of issues and PRs. More evocative but less immediately clear.
 

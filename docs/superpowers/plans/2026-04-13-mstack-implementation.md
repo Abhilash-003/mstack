@@ -2,13 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build MStack, a Claude Code skills plugin that automates open source maintenance — issue triage, PR review, release management, health monitoring, and response drafting — following the Rstack/GStack SKILL.md architecture.
+**Goal:** Build MStack, a Claude Code skills plugin that automates open source maintenance — issue triage, PR review, release management, health monitoring, and response drafting — using the SKILL.md architecture pattern.
 
 **Architecture:** Pure SKILL.md files with no backend. Claude Code IS the runtime. GitHub interaction via `gh` CLI. Local config via `bin/mstack-config` shell utility. Two-phase install: offline bootstrap (`./setup`) + interactive per-repo setup (`/mstack-setup` skill). Human-in-the-loop at every action.
 
 **Tech Stack:** Bash (setup + config utility), Markdown SKILL.md files (all skills), `gh` CLI (GitHub API), Git (repo detection + tags)
 
-**Reference implementation:** Rstack at `/tmp/rstack-ref/` — follow its patterns exactly for frontmatter, preamble, config utility, setup script, and skill structure.
+**Reference:** Follow the SKILL.md pattern — YAML frontmatter, preamble bash block, prose workflow, AskUserQuestion checkpoints.
 
 ---
 
@@ -17,7 +17,7 @@
 ```
 mstack/
 ├── bin/
-│   └── mstack-config              # Config utility (get/set/list) — adapted from rstack-config
+│   └── mstack-config              # Config utility (get/set/list)
 ├── _shared/
 │   ├── gh-helpers.md              # Common gh CLI patterns for all skills
 │   ├── detection.md               # Bot/spam detection heuristics
@@ -56,7 +56,7 @@ mstack/
 ```
 
 **Skill name conventions:** Skills that might conflict with common names use prefixed names:
-- `/mstack-setup` (not `/setup` — conflicts with Rstack)
+- `/mstack-setup` (not `/setup` — too generic, may conflict)
 - `/mstack-release` (not `/release` — too generic)
 - `/review-prs` (not `/review` — conflicts with common skill name)
 - `/triage`, `/health`, `/respond`, `/maintain` are unique enough to keep short
@@ -87,7 +87,7 @@ Copyright (c) 2026 MStack Contributors
 
 - [ ] **Step 3: Write bin/mstack-config**
 
-Adapted from Rstack's `bin/rstack-config`. Same interface: `get`, `set`, `list`. Config lives at `~/.mstack/config.yaml`.
+YAML config utility with `get`, `set`, `list` interface. Config lives at `~/.mstack/config.yaml`.
 
 ```bash
 #!/usr/bin/env bash
@@ -193,7 +193,7 @@ git commit -m "Add project scaffolding: VERSION, LICENSE, config utility"
 
 - [ ] **Step 1: Write the setup script**
 
-Adapted from Rstack's `setup`. Checks `gh` CLI, creates state directory, symlinks skills, writes default config.
+Bootstrap script. Checks `gh` CLI, creates state directory, symlinks skills, writes default config.
 
 ```bash
 #!/usr/bin/env bash
@@ -618,7 +618,7 @@ git commit -m "Add response templates for common maintainer scenarios"
 
 - [ ] **Step 1: Write root SKILL.md**
 
-This is the entry point that routes to sub-skills. Follows Rstack's exact pattern.
+This is the entry point that routes to sub-skills.
 
 ```markdown
 ---
@@ -1916,7 +1916,7 @@ If not ready: stop with appropriate message.
 
 ## Overview
 
-This is the orchestrator skill. It chains /triage → /review-prs → /respond → /health with human checkpoints at each boundary. Like Rstack's /research orchestrator.
+This is the orchestrator skill. It chains /triage → /review-prs → /respond → /health with human checkpoints at each boundary.
 
 Tell the user:
 
@@ -2013,7 +2013,7 @@ git commit -m "Add /maintain skill: full pipeline orchestrator with phase checkp
 
 - [ ] **Step 1: Write CLAUDE.md**
 
-Development reference for Claude Code (and human contributors). Follow Rstack's pattern.
+Development reference for Claude Code (and human contributors).
 
 ```markdown
 # MStack development
@@ -2122,11 +2122,11 @@ Rules:
 
 - [ ] **Step 2: Write ARCHITECTURE.md**
 
-Follow Rstack's pattern — explain WHY, not just WHAT.
+Explain WHY, not just WHAT.
 
 Write `ARCHITECTURE.md` explaining:
 - The core idea (Claude Code as runtime, SKILL.md files)
-- Why no backend (follows Rstack/GStack proven pattern)
+- Why no backend (SKILL.md pattern is proven and simple)
 - Why `gh` CLI (no PAT, already authenticated)
 - State management (.mstack/ plumbing)
 - Two-phase install
@@ -2135,19 +2135,19 @@ Write `ARCHITECTURE.md` explaining:
 
 - [ ] **Step 3: Write CONTRIBUTING.md**
 
-Follow Rstack's pattern. Cover:
+Cover:
 - Quick start (clone + setup)
 - How skills work (frontmatter + preamble + prose)
 - Adding a new skill
 - Editing existing skills
-- Conventions (GStack patterns, human checkpoints, never auto-act)
+- Conventions (follow existing patterns, human checkpoints, never auto-act)
 - Testing (frontmatter validation, config tests, integration tests)
 - Commit style
 - What NOT to change
 
 - [ ] **Step 4: Write README.md**
 
-The most important file for open source exposure. Follow Rstack's README structure:
+The most important file for open source exposure. Structure:
 - Badges (license, version, PRs welcome)
 - One-line description
 - Problem statement (maintainer burnout + AI spam)
@@ -2162,7 +2162,7 @@ The most important file for open source exposure. Follow Rstack's README structu
 - Configuration
 - Comparison table (vs GitHub Agentic Workflows, PR-Agent, manual)
 - Documentation links
-- Inspired by (Rstack, GStack)
+- License
 - License
 
 - [ ] **Step 5: Write CHANGELOG.md**

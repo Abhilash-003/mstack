@@ -30,9 +30,9 @@ Every action requires explicit maintainer approval. Nothing is posted, labeled, 
 
 ## Why no backend
 
-The predecessor to this pattern — Ignis, the research automation platform — used Express.js + React + PostgreSQL + Supabase + a fleet of Mastra agents. It worked, but the infrastructure overhead killed iteration speed. Adding a new step meant writing an agent, registering it, adding a route, updating the frontend, testing the workflow, and deploying to Railway.
+Traditional approaches use Express.js + React + PostgreSQL + custom agent frameworks. That works, but the infrastructure overhead kills iteration speed. Adding a new step means writing an agent, registering it, adding a route, updating the frontend, testing the workflow, and deploying.
 
-A better approach: write a Markdown file. That's the entire implementation.
+MStack's approach: write a Markdown file. That's the entire implementation.
 
 Every skill in MStack is a SKILL.md file with:
 - **Frontmatter** declaring the skill name, version, and allowed tools
