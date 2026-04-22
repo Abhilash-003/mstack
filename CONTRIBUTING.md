@@ -5,7 +5,7 @@ Thanks for wanting to make MStack better. Whether you're fixing a prompt in a sk
 ## Quick start
 
 ```bash
-git clone https://github.com/neuroanalog/mstack.git
+git clone https://github.com/Abhilash-003/mstack.git
 cd mstack
 ./setup
 ```
@@ -136,4 +136,4 @@ One logical change per commit. Bisectable history. Examples:
 
 ## Questions?
 
-Open a [GitHub issue](https://github.com/neuroanalog/mstack/issues) — we're happy to help.
+Open a [GitHub issue](https://github.com/Abhilash-003/mstack/issues) — we're happy to help.

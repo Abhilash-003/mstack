@@ -2,7 +2,7 @@
 
 **Date:** 2026-04-13
 **Status:** Draft
-**Author:** neuroanalog
+**Author:** MStack Contributors
 
 ---
 

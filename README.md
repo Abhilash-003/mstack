@@ -23,7 +23,7 @@ An OSS maintainer with 50 unread issues spends 80% of their time on grunt work: 
 ## Install (30 seconds)
 
 ```bash
-git clone --single-branch --depth 1 https://github.com/neuroanalog/mstack.git ~/.claude/skills/mstack
+git clone --single-branch --depth 1 https://github.com/Abhilash-003/mstack.git ~/.claude/skills/mstack
 cd ~/.claude/skills/mstack && ./setup
 ```
 

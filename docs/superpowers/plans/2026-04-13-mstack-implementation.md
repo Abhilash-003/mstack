@@ -82,7 +82,7 @@ Write to `VERSION`.
 
 Write the MIT license to `LICENSE` with copyright line:
 ```
-Copyright (c) 2026 neuroanalog
+Copyright (c) 2026 MStack Contributors
 ```
 
 - [ ] **Step 3: Write bin/mstack-config**
@@ -106,7 +106,7 @@ STATE_DIR="${MSTACK_STATE_DIR:-$HOME/.mstack}"
 CONFIG_FILE="$STATE_DIR/config.yaml"
 
 CONFIG_HEADER='# mstack configuration — edit freely, changes take effect on next skill run.
-# Docs: https://github.com/neuroanalog/mstack
+# Docs: https://github.com/Abhilash-003/mstack
 #
 # ─── Triage ──────────────────────────────────────────────────────────
 # detect_duplicates: true     # check for duplicate issues during triage
